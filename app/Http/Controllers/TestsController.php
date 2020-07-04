@@ -57,4 +57,29 @@ class TestsController extends Controller
         return APIService::sendJson(["status" => "OK", "response" => ["questions" => $questions],"message" => "success"]);
 
     }
+
+    public function saveTests(Request $request){
+        $credentials = $request->only(['email','password']);
+        
+        if (!Auth::attempt($credentials)) {
+            return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Email e/ou senha inválidos"]);
+        }
+
+        $user = Auth::user();
+        $match_id = $request->input('match_id');
+        $test_id = $request->input('test_id');
+        $score = $request->input('score');
+        $win = $request->input('win');
+
+        $ut = new UserTest();
+        $ut->user_id = $user->id;
+        $ut->match_id = $match_id;
+        $ut->test_id = $test_id;
+        $ut->score = $score;
+        $ut->win = $score;
+        $ut->save();
+
+
+        return APIService::sendJson(["status" => "OK", "response" => null, "message" => "success"]);
+    }
 }

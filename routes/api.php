@@ -17,3 +17,4 @@ Route::post('/login', ['middleware' => 'cors', 'uses' => 'UserController@login']
 Route::post('/tests/load', ['middleware' => 'cors', 'uses' => 'TestsController@loadAllowTests']);
 Route::post('/tests/done', ['middleware' => 'cors', 'uses' => 'TestsController@loadDoneTests']);
 Route::post('/tests/questions', ['middleware' => 'cors', 'uses' => 'TestsController@getQuestions']);
+Route::post('/tests/save', ['middleware' => 'cors', 'uses' => 'TestsController@saveTests']);
