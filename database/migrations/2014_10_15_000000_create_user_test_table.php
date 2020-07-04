@@ -15,9 +15,9 @@ class CreateUserTestTable extends Migration
     {
         Schema::create('user_test', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_id');
+            $table->bigInteger('user_id')->unsigned();;
             $table->foreign('user_id')->references('id')->on('user');
-            $table->bigInteger('test_id');
+            $table->bigInteger('test_id')->unsigned();;
             $table->foreign('test_id')->references('id')->on('test');
             $table->float('score');
             $table->tinyInteger('win',1);
