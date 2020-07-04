@@ -15,18 +15,18 @@ class DatabaseSeeder extends Seeder
             DB::table('user')->insert([
                 'name' => 'Iago',
                 'email' => 'iagoagualuza@id.uff.br',
-                'password' => Hash::make('123456'),
+                'password' => md5('123456'),
             ]);
 
             DB::table('test')->insert([
-                'match_id' => Hash::make('4353454'),
+                'match_id' => md5('4353454'),
                 'title' => 'Python',
                 'test_value' => 25.00,
                 'badge' => '/python.png'
             ]);
 
             DB::table('test')->insert([
-                'match_id' => Hash::make('s3343'),
+                'match_id' => md5('s3343'),
                 'title' => 'Go',
                 'test_value' => 25.00,
                 'badge' => '/go.png'
