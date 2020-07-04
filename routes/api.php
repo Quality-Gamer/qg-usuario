@@ -14,4 +14,5 @@ use Illuminate\Http\Request;
 */
 
 Route::post('/login', ['middleware' => 'cors', 'uses' => 'UserController@login']);
-Route::post('/tests/load', ['middleware' => 'cors', 'uses' => 'TestsController@loadAllowTests']);
+Route::post('/tests/load', ['middleware' => 'cors', 'uses' => 'TestsController@loadDoneTestsByUser']);
+Route::post('/tests/done', ['middleware' => 'cors', 'uses' => 'TestsController@loadDoneTestsByUser']);
