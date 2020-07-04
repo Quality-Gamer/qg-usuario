@@ -36,13 +36,13 @@ class User extends Authenticatable
             $today = date('Y-m-d');
             $diff = date_diff(date_create($t->created_at),date_create($today));
             if($diff->d < 180){
-                $deniedTests[] = $t->id;
+                $deniedTests[] = $t;
             }
         }
 
         foreach($listObjTests as $t){
             if(!in_array($t->id,$deniedTests)){
-                $allowedTests[] = $t->id;
+                $allowedTests[] = $t;
             }
         }
 
