@@ -76,7 +76,7 @@ class TestsController extends Controller
         $ut->match_id = $match_id;
         $ut->test_id = $test_id;
         $ut->score = $score;
-        $ut->win = $score;
+        $ut->win = $win;
         $ut->save();
 
 
