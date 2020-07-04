@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
+use App\Test;
+use App\APIService;
 
 class User extends Authenticatable
 {
@@ -12,12 +14,49 @@ class User extends Authenticatable
 
     protected $table = 'user';
 
+    public function userTest()
+    {
+        return $this->hasMany('App\UserTest');
+    }
+
     public static function login($credentials) {
         if(Auth::attempt($credentials)){
             return APIService::sendJson(["status" => "OK", "response" => Auth::user(),"message" => "success"]);
         }
 
         return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Email e/ou senha inválidos"]);
+    }
+
+    public function loadAllowTestsByUser(){
+        $allowedTests = [];
+        $deniedTests = [];
+        $listObjTests = Test::all();
+
+        foreach($this->userTest as $t){
+            $today = date('Y-m-d');
+            $diff = date_diff(date_create($t->created_at),date_create($today));
+            if($diff->d < 180){
+                $deniedTests[] = $t->test;
+            }
+        }
+
+        foreach($listObjTests as $t){
+            if(!in_array($t,$deniedTests)){
+                $allowedTests[] = $t;
+            }
+        }
+
+        return APIService::sendJson(["status" => "OK", "response" => ["allow" => $allowedTests, "deny" => $deniedTests],"message" => "success"]);
+    }
+
+    public function loadDoneTestsByUser(){
+        $doneTests = [];
+
+        foreach($this->userTest as $t){
+            $doneTests[] = [ "test" => $t->test, "user_test" => $t ];
+        }
+
+        return APIService::sendJson(["status" => "OK", "response" => ["done_tests" => $doneTests],"message" => "success"]);
     }
 
     /**
