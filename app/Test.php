@@ -9,7 +9,7 @@ class Test extends Model
 {
     protected $table = 'test';
 
-    public function question()
+    public function questions()
     {
         return $this->hasMany('App\Question');
     }
