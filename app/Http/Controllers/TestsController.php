@@ -45,6 +45,11 @@ class TestsController extends Controller
         $match_id = $request->input('match_id');
 
         $userTest = UserTest::where('match_id', $match_id)->first();
+        
+        if(!isset($userTest)){
+            return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Esse teste não foi iniciado"]);
+        }
+
         $test = $userTest->test;
         $questions = $test->questions;
 
