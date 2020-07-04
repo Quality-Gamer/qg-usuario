@@ -20,7 +20,7 @@ class CreateUserTestTable extends Migration
             $table->bigInteger('test_id')->unsigned();
             $table->foreign('test_id')->references('id')->on('test');
             $table->float('score');
-            $table->integer('win',1);
+            $table->tinyInteger('win');
             $table->timestamps();
         });
     }
