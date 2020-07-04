@@ -80,6 +80,6 @@ class TestsController extends Controller
         $ut->save();
 
 
-        return APIService::sendJson(["status" => "OK", "response" => null, "message" => "success"]);
+        return APIService::sendJson(["status" => "OK", "response" => $ut, "message" => "success"]);
     }
 }
