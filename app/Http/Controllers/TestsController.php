@@ -21,7 +21,7 @@ class TestsController extends Controller
 
     }
 
-    public function loadDoneTest(Request $request){
+    public function loadDoneTests(Request $request){
         $credentials = $request->only(['email','password']);
         
         if (!Auth::attempt($credentials)) {
