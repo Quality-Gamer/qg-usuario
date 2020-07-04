@@ -17,6 +17,7 @@ class TestsController extends Controller
         }
 
         $user = Auth::user();
-        $tests = $user->loadAllowTestsByUser();
+        return $user->loadAllowTestsByUser();
+
     }
 }
