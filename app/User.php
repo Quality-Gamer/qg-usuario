@@ -41,7 +41,7 @@ class User extends Authenticatable
         }
 
         foreach($listObjTests as $t){
-            if(!in_array($t->id,$deniedTests)){
+            if(!in_array($t,$deniedTests)){
                 $allowedTests[] = $t;
             }
         }
