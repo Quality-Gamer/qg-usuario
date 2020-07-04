@@ -20,4 +20,16 @@ class TestsController extends Controller
         return $user->loadAllowTestsByUser();
 
     }
+
+    public function loadDoneTest(Request $request){
+        $credentials = $request->only(['email','password']);
+        
+        if (!Auth::attempt($credentials)) {
+            return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Email e/ou senha inválidos"]);
+        }
+
+        $user = Auth::user();
+        return $user->loadDoneTestsByUser();
+
+    }
 }

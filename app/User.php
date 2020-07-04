@@ -49,6 +49,16 @@ class User extends Authenticatable
         return APIService::sendJson(["status" => "OK", "response" => ["allow" => $allowedTests, "deny" => $deniedTests],"message" => "success"]);
     }
 
+    public function loadDoneTestsByUser(){
+        $doneTests = [];
+
+        foreach($this->userTest as $t){
+            $doneTests[] = [ "test" => $t->test, "user_test" => $t ];
+        }
+
+        return APIService::sendJson(["status" => "OK", "response" => ["done_tests" => $doneTests],"message" => "success"]);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
