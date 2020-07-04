@@ -35,7 +35,7 @@ class TestsController extends Controller
 
     }
 
-    public function getQuestion(Request $request){
+    public function getQuestions(Request $request){
         $credentials = $request->only(['email','password']);
         
         if (!Auth::attempt($credentials)) {
