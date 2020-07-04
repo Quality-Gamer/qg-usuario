@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\APIService;
+use App\Test;
+use App\UserTest;
 
 class TestsController extends Controller
 {
@@ -30,6 +32,24 @@ class TestsController extends Controller
 
         $user = Auth::user();
         return $user->loadDoneTestsByUser();
+
+    }
+
+    public function getQuestion(Request $request){
+        $credentials = $request->only(['email','password']);
+        
+        if (!Auth::attempt($credentials)) {
+            return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Email e/ou senha inválidos"]);
+        }
+
+        $match_id = $request->input('match_id');
+
+        $userTest = UserTest::where('match_id', $match_id)->first();
+        $test = $userTest->test;
+        $questions = $test->questions;
+
+
+        return APIService::sendJson(["status" => "OK", "response" => ["questions" => $questions],"message" => "success"]);
 
     }
 }
