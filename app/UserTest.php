@@ -11,12 +11,12 @@ class UserTest extends Model
 
     public function test()
     {
-        return $this->hasOne('App\Test');
+        return $this->belongsTo('App\Test');
     }
 
     public function user()
     {
-        return $this->hasOne('App\User');
+        return $this->belongsTo('App\User');
     }
 
 }
