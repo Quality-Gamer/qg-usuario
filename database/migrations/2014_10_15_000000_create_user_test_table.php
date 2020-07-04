@@ -17,7 +17,7 @@ class CreateUserTestTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('user');
-            $table->bigInteger('test_id')->unsigned();;
+            $table->bigInteger('test_id')->unsigned();
             $table->foreign('test_id')->references('id')->on('test');
             $table->float('score');
             $table->tinyInteger('win',1);
