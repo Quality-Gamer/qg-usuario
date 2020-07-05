@@ -65,11 +65,18 @@ class TestsController extends Controller
             return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Email e/ou senha inválidos"]);
         }
 
+        
         $user = Auth::user();
         $match_id = $request->input('match_id');
         $test_id = $request->input('test_id');
         $score = $request->input('score');
         $win = $request->input('win');
+
+        $count = UserTest::where("match_id",$match_id)->count();
+
+        if($count > 0){
+            return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Esse teste já foi feito"]);
+        }
 
         $ut = new UserTest();
         $ut->user_id = $user->id;
