@@ -50,7 +50,7 @@ class TestsController extends Controller
 
         $userTest = UserTest::where('match_id', $match_id)->first();
         
-        if(!isset($userTest->id) || empty($userTest->id)){
+        if(!isset($userTest) || empty($userTest)){
             return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Esse teste não foi iniciado"]);
         }
 
@@ -81,7 +81,7 @@ class TestsController extends Controller
         $win = $request->input('win');
         $ut = UserTest::where('match_id', $match_id)->first();;
         
-        if(!isset($ut->id) || empty($ut->id)){
+        if(!isset($ut) || empty($ut)){
             $win = null;
             $ut = new UserTest();
         }
