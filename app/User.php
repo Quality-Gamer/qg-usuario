@@ -5,7 +5,6 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use App\Test;
 use App\APIService;
 
@@ -39,7 +38,6 @@ class User extends Authenticatable
             $diff = date_diff(date_create($t->created_at),date_create($today));
             if($diff->d < 180){
                 if(!in_array($t->test->id,$testIdArray)){
-                    Log::debug($t->test->id);
                     $deniedTests[] = $t->test;
                     $testIdArray[] = $t->test->id;
                 }
