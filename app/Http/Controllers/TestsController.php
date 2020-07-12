@@ -12,36 +12,40 @@ use App\UserTest;
 class TestsController extends Controller
 {
     public function loadAllowTests(Request $request){
-        $credentials = $request->only(['email','password']);
+        $user_id = $request->input('user_id');
         
-        if (!Auth::attempt($credentials)) {
-            return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Email e/ou senha inválidos"]);
+        if (!$user_id) {
+            return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Usuário precisa ser passado"]);
         }
 
-        $user = Auth::user();
+        $user = User::find($user_id);
+
+        if (!$user) {
+            return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Usuário não existe"]);
+        }
+
         return $user->loadAllowTestsByUser();
 
     }
 
     public function loadDoneTests(Request $request){
-        $credentials = $request->only(['email','password']);
+        $user_id = $request->input('user_id');
         
-        if (!Auth::attempt($credentials)) {
-            return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Email e/ou senha inválidos"]);
+        if (!$user_id) {
+            return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Usuário precisa ser passado"]);
         }
 
-        $user = Auth::user();
+        $user = User::find($user_id);
+
+        if (!$user) {
+            return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Usuário não existe"]);
+        }
+
         return $user->loadDoneTestsByUser();
 
     }
 
     public function getQuestions(Request $request){
-        $credentials = $request->only(['email','password']);
-        
-        if (!Auth::attempt($credentials)) {
-            return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Email e/ou senha inválidos"]);
-        }
-
         $match_id = $request->input('match_id');
 
         $userTest = UserTest::where('match_id', $match_id)->first();
@@ -59,14 +63,18 @@ class TestsController extends Controller
     }
 
     public function saveTests(Request $request){
-        $credentials = $request->only(['email','password']);
+        $user_id = $request->input('user_id');
         
-        if (!Auth::attempt($credentials)) {
-            return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Email e/ou senha inválidos"]);
+        if (!$user_id) {
+            return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Usuário precisa ser passado"]);
         }
 
-        
-        $user = Auth::user();
+        $user = User::find($user_id);
+
+        if (!$user) {
+            return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Usuário não existe"]);
+        }
+
         $match_id = $request->input('match_id');
         $test_id = $request->input('test_id');
         $score = $request->input('score');
