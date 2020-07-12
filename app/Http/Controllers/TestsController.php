@@ -83,8 +83,11 @@ class TestsController extends Controller
         
         if(!isset($ut) || empty($ut)){
             $win = null;
+            $string = $user->id . time(); 
+            $match_id = md5($string);
             $ut = new UserTest();
         }
+        
 
         $count = UserTest::where("match_id",$match_id)->whereRaw("win is not null")->count();
 
