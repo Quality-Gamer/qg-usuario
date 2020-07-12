@@ -86,6 +86,8 @@ class TestsController extends Controller
             $string = $user->id . time(); 
             $match_id = md5($string);
             $ut = new UserTest();
+        } else {
+            $test_id = $ut->test_id;
         }
         
 
