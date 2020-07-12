@@ -79,14 +79,19 @@ class TestsController extends Controller
         $test_id = $request->input('test_id');
         $score = $request->input('score');
         $win = $request->input('win');
+        $ut = UserTest::where('match_id', $match_id)->first();;
+        
+        if(!isset($ut)){
+            $win = null;
+            $ut = new UserTest();
+        }
 
-        $count = UserTest::where("match_id",$match_id)->count();
+        $count = UserTest::where("match_id",$match_id)->whereRaw("win is not null")->count();
 
         if($count > 0){
             return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Esse teste já foi feito"]);
         }
 
-        $ut = new UserTest();
         $ut->user_id = $user->id;
         $ut->match_id = $match_id;
         $ut->test_id = $test_id;
