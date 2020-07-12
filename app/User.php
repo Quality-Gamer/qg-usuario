@@ -34,9 +34,13 @@ class User extends Authenticatable
 
         foreach($this->userTest as $t){
             $today = date('Y-m-d');
+            $testIdArray = [];
             $diff = date_diff(date_create($t->created_at),date_create($today));
             if($diff->d < 180){
-                $deniedTests[] = $t->test;
+                if(!in_array($t->test->id,$testIdArray)){
+                    $deniedTests[] = $t->test;
+                    $testIdArray[] = $t->test->id;
+                }
             }
         }
 
