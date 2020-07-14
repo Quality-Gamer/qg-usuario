@@ -78,8 +78,12 @@ class TestsController extends Controller
         $match_id = $request->input('match_id');
         $test_id = $request->input('test_id');
         $score = $request->input('score');
-        $win = $request->input('win');
-        $ut = UserTest::where('match_id', $match_id)->first();;
+        $ut = UserTest::where('match_id', $match_id)->first();
+        $win = 0;
+        
+        if($score >= 70){
+            $win = 1;
+        }
         
         if(!isset($ut) || empty($ut)){
             $win = null;
