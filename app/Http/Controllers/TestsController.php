@@ -80,8 +80,8 @@ class TestsController extends Controller
         $score = $request->input('score');
         $ut = UserTest::where('match_id', $match_id)->first();
         $win = 0;
-        
-        if($score >= 70){
+
+        if($score >= 0.7){
             $win = 1;
         }
         
