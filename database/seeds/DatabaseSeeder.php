@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
             DB::table('user')->insert([
                 'name' => 'Iago',
                 'email' => 'iagoagualuza@id.uff.br',
-                'password' => md5('123456'),
+                'password' => Hash::make('123456'),
             ]);
 
             DB::table('test')->insert([
