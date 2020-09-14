@@ -16,4 +16,8 @@ class UserController extends Controller
         $id = $request->input("user_id");
         return User::find($id);
     }
+
+    public function loadUsers(Request $request){
+        return User::all();
+    }
 }
