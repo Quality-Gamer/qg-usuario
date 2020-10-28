@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class Challenge extends Model
 {
+    protected $table = 'challenge';
     public static function loadAllChallangesByUser($uid) {
         return DB::table('challenge')
                 ->join('user_challenge', 'challenge.id', '=', 'user_challenge.challange_id')
