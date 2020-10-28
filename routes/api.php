@@ -20,3 +20,5 @@ Route::post('/tests/done', ['middleware' => 'cors', 'uses' => 'TestsController@l
 Route::post('/tests/questions', ['middleware' => 'cors', 'uses' => 'TestsController@getQuestions']);
 Route::post('/tests/save', ['middleware' => 'cors', 'uses' => 'TestsController@saveTests']);
 Route::get('/load/users', ['middleware' => 'cors', 'uses' => 'UserController@loadUsers']);
+Route::post('/challange/create', ['middleware' => 'cors', 'uses' => 'ChallengeController@create']);
+Route::get('/challange/load', ['middleware' => 'cors', 'uses' => 'ChallengeController@load']);
