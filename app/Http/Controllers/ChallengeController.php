@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Challenge;
+use App\UserChallenge;
+use App\UserChallengeScore;
 use stdClass;
 
 class ChallengeController extends Controller
@@ -35,6 +37,27 @@ class ChallengeController extends Controller
     public function load(Request $request){
         $id = $request->input("user_id");
         return ["status" => "OK", "response" => Challenge::loadAllChallangesByUser($id), "message" => "Sucesso"];
+    }
+
+    public function join(Request $request){
+        $uid = $request->input("user_id");
+        $cid = $request->input("challenge_id");
+        $status = "NOK";
+        $response = null;
+        $message = "Falha na operação";
+
+        if ($uid && $cid) {
+            $model = new UserChallenge;
+            $model->user_id = $uid;
+            $model->challenge_id = $cid;
+            if($model->save()){
+                $status = "OK";
+                $message = "Sucesso";
+                $reponse = $model;
+            }
+        }
+
+        return ["status" => $status, "response" => $response, "message" => $message];
     }
 
 }

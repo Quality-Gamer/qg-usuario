@@ -22,3 +22,4 @@ Route::post('/tests/save', ['middleware' => 'cors', 'uses' => 'TestsController@s
 Route::get('/load/users', ['middleware' => 'cors', 'uses' => 'UserController@loadUsers']);
 Route::post('/challenge/create', ['middleware' => 'cors', 'uses' => 'ChallengeController@create']);
 Route::get('/challenge/load', ['middleware' => 'cors', 'uses' => 'ChallengeController@load']);
+Route::post('/challenge/join', ['middleware' => 'cors', 'uses' => 'ChallengeController@join']);
