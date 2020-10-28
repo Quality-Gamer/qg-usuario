@@ -17,10 +17,10 @@ class ChallengeController extends Controller
         $response->response = null;
         $response->message = "Falha na operação";
 
-        if($user) {
+        if($user && !empty($request->input("challenge_name"))) {
             $model = new Challenge;
             $model->user_id = $user->id;
-            $model->challenge_name = $request->input("challange_name");
+            $model->challenge_name = $request->input("challenge_name");
             $model->active = 1;
             if($model->save()) {
                   $response->status = "OK";
