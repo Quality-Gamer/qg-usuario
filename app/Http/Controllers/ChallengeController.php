@@ -21,9 +21,12 @@ class ChallengeController extends Controller
             $model = new Challenge;
             $model->user_id = $user->id;
             $model->challenge_name = $request->input("challange_name");
-            $response->status = "OK";
-            $response->response = $model;
-            $response->message = "Sucesso";
+            $model->active = 1;
+            if($model->save()) {
+                  $response->status = "OK";
+                $response->response = $model;
+                $response->message = "Sucesso";
+            }
         }
 
         return $response;
