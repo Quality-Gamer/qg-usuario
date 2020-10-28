@@ -11,11 +11,11 @@ use stdClass;
 class ChallengeController extends Controller
 {
     public function create(Request $request){
-        $response = new stdClass;
+        $response = [];
         $user = User::find($request->input("user_id"));
-        $response->status = "NOK";
-        $response->response = null;
-        $response->message = "Falha na operação";
+        $response['status'] = "NOK";
+        $response['response'] = null;
+        $response['message'] = "Falha na operação";
 
         if($user && !empty($request->input("challenge_name"))) {
             $model = new Challenge;
@@ -23,9 +23,9 @@ class ChallengeController extends Controller
             $model->challenge_name = $request->input("challenge_name");
             $model->active = 1;
             if($model->save()) {
-                  $response->status = "OK";
-                $response->response = $model;
-                $response->message = "Sucesso";
+                $response['status'] = "OK";
+                $response['response'] = $model;
+                $response['message'] = "Sucesso";
             }
         }
 
