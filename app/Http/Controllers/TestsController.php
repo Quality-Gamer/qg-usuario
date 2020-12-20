@@ -46,9 +46,9 @@ class TestsController extends Controller
     }
 
     public function getQuestions(Request $request){
-        $test_id = $request->input('test_id');
+        $match_id = $request->input('match_id');
 
-        $userTest = UserTest::where('test_id', $test_id)->first();
+        $userTest = UserTest::where('match_id', $match_id)->first();
         
         if(!isset($userTest) || empty($userTest)){
             return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Esse teste não foi iniciado"]);
