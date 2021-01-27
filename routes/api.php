@@ -24,3 +24,4 @@ Route::post('/challenge/create', ['middleware' => 'cors', 'uses' => 'ChallengeCo
 Route::get('/challenge/load', ['middleware' => 'cors', 'uses' => 'ChallengeController@load']);
 Route::post('/challenge/join', ['middleware' => 'cors', 'uses' => 'ChallengeController@join']);
 Route::get('/universities', ['middleware' => 'cors', 'uses' => 'UserController@getUniversities']);
+Route::post('/create/user', ['middleware' => 'cors', 'uses' => 'UserController@create']);

@@ -61,6 +61,16 @@ class User extends Authenticatable
         return APIService::sendJson(["status" => "OK", "response" => ["done_tests" => $doneTests],"message" => "success"]);
     }
 
+    public function messages() {
+        return [
+            'name.required' => 'A title is required',
+            'email.required'  => 'A message is required',
+            'password.required' => '',
+            'university.required' => '',
+            'char.required' => '',
+        ];
+    }
+
     /**
      * The attributes that are mass assignable.
      *
