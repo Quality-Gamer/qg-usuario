@@ -60,6 +60,9 @@ class UserController extends Controller
     }
 
     public function getUniversities(Request $request) {
-        return ["status" => "OK", "response" => University::all(), "message" => "success"];
+        $u = DB::table('university')
+        ->whereRaw('activated = ?', [1])
+        ->get();
+        return ["status" => "OK", "response" => $u, "message" => "success"];
     }
 }
