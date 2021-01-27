@@ -28,13 +28,13 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             $err = $validator->errors();
-            $array = array();
+            // $array = array();
 
-            foreach ($err as $e) {
-               $array[] = User::message()[$e]; 
-            }
+            // foreach ($err as $e) {
+            //    $array[] = User::message()[$e]; 
+            // }
 
-            return APIService::sendJson(["status" => "NOK", "response" => [], "message" => $array]);
+            return APIService::sendJson(["status" => "NOK", "response" => [], "message" => $err]);
         }
 
         $user = new User;
