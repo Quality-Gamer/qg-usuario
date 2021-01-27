@@ -63,11 +63,11 @@ class User extends Authenticatable
 
     public function messages() {
         return [
-            'name.required' => 'A title is required',
-            'email.required'  => 'A message is required',
-            'password.required' => '',
-            'university.required' => '',
-            'char.required' => '',
+            'The name field is required.' => 'Nome requerido',
+            'The email field is required.' => 'Email requerido',
+            'The password field is required.' => 'Senha requerida',
+            'The university field is required.' => 'Universidade requerida',
+            'The char field is required.' => 'Personagem requerido',
         ];
     }
 

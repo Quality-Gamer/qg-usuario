@@ -48,7 +48,7 @@ class UserController extends Controller
             return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Falha na operação"]);
         }
 
-        return APIService::sendJson(["status" => "NOK", "response" => $user, "message" => "sucesso"]);
+        return APIService::sendJson(["status" => "OK", "response" => $user, "message" => "sucesso"]);
     }
 
     public function user(Request $request){
