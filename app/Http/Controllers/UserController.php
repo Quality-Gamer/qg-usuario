@@ -44,9 +44,12 @@ class UserController extends Controller
         $user->university_id = $request->input('university');
         $user->char_id = $request->input('char');
 
-        $u = User::where('email',$user->email);
+        $exists = DB::table('user')
+        ->select(DB::raw('count(distinct id)'))
+        ->where('email', '=', $user->email)
+        ->first();
         
-        if($u->id) {
+        if($exists) {
             return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Email já registrado"]);
         }
 
