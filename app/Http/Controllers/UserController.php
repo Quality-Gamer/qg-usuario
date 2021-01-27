@@ -7,6 +7,7 @@ use App\User;
 use App\University;
 use App\APIService;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
