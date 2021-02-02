@@ -14,9 +14,16 @@ class User extends Authenticatable
 
     protected $table = 'user';
 
-    public function userTest()
-    {
+    public function userTest() {
         return $this->hasMany('App\UserTest');
+    }
+
+    public function level() {
+        return $this->belongsTo('App\Level');
+    }
+
+    public function university() {
+        return $this->belongsTo('App\University');
     }
 
     public static function login($credentials) {
