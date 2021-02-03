@@ -20,7 +20,7 @@ class User extends Authenticatable
     }
 
     public function level() {
-        return $this->belongsTo('App\Level');
+        return $this->hasOne('App\Level');
     }
 
     public function university() {
@@ -30,7 +30,9 @@ class User extends Authenticatable
     public static function login($credentials) {
         if(Auth::attempt($credentials)){
             $user = Auth::user();
-            return APIService::sendJson(["status" => "OK", "response" => ["user" => $user, "level" => $user->level, "university" => $user->university],"message" => "success"]);
+            $user->level;
+            $user->university;
+            return APIService::sendJson(["status" => "OK", "response" => $user,"message" => "success"]);
         }
 
         return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Email e/ou senha inválidos"]);
