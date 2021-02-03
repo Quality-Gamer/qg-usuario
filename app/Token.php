@@ -15,12 +15,12 @@ class Token extends Model
     }
 
     public function isValid() {
-        $valid = DB::select("NOW() <= '{$this->expires}' AS valid")->first();
+        $valid = DB::select("SELECT NOW() <= '{$this->expires}' AS valid")->first();
         return $valid['valid'];      
     }
 
     public function setExpires() {
-        $expires = DB::select("DATE_ADD(NOW(),INTERVAL 2 HOUR) AS expires")->first();
+        $expires = DB::select("SELECT DATE_ADD(NOW(),INTERVAL 2 HOUR) AS expires")->first();
         $this->expires = $expires['expires'];  
     }
 
