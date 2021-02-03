@@ -19,18 +19,7 @@ class UserController extends Controller
 {
     public function login(Request $request){
         $credentials = $request->only(['email','password']);
-        $user = User::login($credentials);
-        
-        $response = new stdClass;
-        $response->nome = $user->nome;
-        $response->email = $user->email;
-
-        if($user) {
-            $response->level = $user->level();
-            $response->university = $user->university();
-        }
-        
-        return APIService::sendJson($response);
+        return User::login($credentials);
     }
 
     public function create(Request $request){
