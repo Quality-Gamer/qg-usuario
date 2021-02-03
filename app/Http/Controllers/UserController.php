@@ -134,7 +134,7 @@ class UserController extends Controller
         $token = new Token;
         $token->user_id = $user->id;
         $token->token = md5($user->id . time() . random_int(0,PHP_INT_MAX));
-        return $token->setExpires();
+        $token->setExpires();
         
         if(!$token->save()) {
             return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Falha na operação"]);
