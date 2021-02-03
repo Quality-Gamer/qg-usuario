@@ -21,6 +21,7 @@ class Token extends Model
 
     public function setExpires() {
         $expires =  DB::select("SELECT DATE_ADD(NOW(),INTERVAL 2 HOUR) as expires");
+        return $expires;
         $this->expires = $expires['expires'];  
     }
 
