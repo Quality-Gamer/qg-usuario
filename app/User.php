@@ -34,8 +34,8 @@ class User extends Authenticatable
     public static function login($credentials) {
         if(Auth::attempt($credentials)){
             $user = Auth::user();
-            $user->relationLevel;
-            $user->relationUniversity;
+            $user->level = $user->relationLevel;
+            $user->university = $user->relationUniversity;
             return APIService::sendJson(["status" => "OK", "response" => $user,"message" => "success"]);
         }
 
