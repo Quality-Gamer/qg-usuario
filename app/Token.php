@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Token extends Model
 {
@@ -22,5 +23,5 @@ class Token extends Model
         $expires = DB::select("DATE_ADD(NOW(),INTERVAL 2 HOUR) AS expires")->first();
         $this->expires = $expires['expires'];  
     }
-    
+
 }
