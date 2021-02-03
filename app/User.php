@@ -30,8 +30,7 @@ class User extends Authenticatable
     public static function login($credentials) {
         if(Auth::attempt($credentials)){
             $user = Auth::user();
-            $u = User::find($user->id);
-            return APIService::sendJson(["status" => "OK", "response" => $u,"message" => "success"]);
+            return APIService::sendJson(["status" => "OK", "response" => ["user" => $user, "level" => $user->level, "university" => $user->university],"message" => "success"]);
         }
 
         return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Email e/ou senha inválidos"]);
