@@ -21,22 +21,22 @@ class User extends Authenticatable
         return $this->hasMany('App\UserTest');
     }
 
-    public function level() {
+    public function relationLevel() {
+        $this->level = $this->belongsTo('App\Level');
         return $this->belongsTo('App\Level');
     }
 
-    public function university() {
+    public function relationUniversity() {
+        $this->level = $this->belongsTo('App\University');
         return $this->belongsTo('App\University');
     }
 
     public static function login($credentials) {
         if(Auth::attempt($credentials)){
             $user = Auth::user();
-            $response = new stdClass;
-            $response = $user;
-            $response->level = $user->level();
-            $response->university = $user->university();
-            return APIService::sendJson(["status" => "OK", "response" => $response,"message" => "success"]);
+            $user->relationLevel;
+            $user->relationUniversity;
+            return APIService::sendJson(["status" => "OK", "response" => $user,"message" => "success"]);
         }
 
         return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Email e/ou senha inválidos"]);
