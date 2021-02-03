@@ -19,9 +19,15 @@ class UserController extends Controller
     public function login(Request $request){
         $credentials = $request->only(['email','password']);
         $user = User::login($credentials);
+        
+        if(!$user) {
+            return APIService::sendJson(["status" => "NOK", "response" => $user, "message" => 'email/senha inválidos']);
+        }
+        
         $user->level = $user->level();
         $user->university = $user->university();
-        return $user;
+        
+        return APIService::sendJson(["status" => "OK", "response" => $user, "message" => 'sucesso']);
     }
 
     public function create(Request $request){
