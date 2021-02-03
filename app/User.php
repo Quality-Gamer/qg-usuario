@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use App\Test;
 use App\APIService;
+use stdClass;
 
 class User extends Authenticatable
 {
@@ -31,9 +32,11 @@ class User extends Authenticatable
     public static function login($credentials) {
         if(Auth::attempt($credentials)){
             $user = Auth::user();
-            $user->level = $user->level();
-            $user->university = $user->university();
-            return APIService::sendJson(["status" => "OK", "response" => $user,"message" => "success"]);
+            $response = new stdClass;
+            $response = $user;
+            $response->level = $user->level();
+            $response->university = $user->university();
+            return APIService::sendJson(["status" => "OK", "response" => $response,"message" => "success"]);
         }
 
         return APIService::sendJson(["status" => "NOK", "response" => NULL, "message" => "Email e/ou senha inválidos"]);
