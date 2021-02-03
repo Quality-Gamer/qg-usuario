@@ -18,14 +18,14 @@ class Token extends Model
         $valid = DB::table($this->table)
         ->selectRaw("(SELECT NOW() <= '{$this->expires}') AS valid", [])
         ->first();
-        return $valid['valid'];      
+        return $valid;      
     }
 
     public function setExpires() {
         $expires = DB::table($this->table)
                 ->selectRaw('(SELECT DATE_ADD(NOW(),INTERVAL 2 HOUR)) AS expires', [])
                 ->first();
-        $this->expires = $expires['expires'];  
+        $this->expires = $expires;  
     }
 
 }
