@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\University;
+use App\Token;
 use App\APIService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -60,6 +61,83 @@ class UserController extends Controller
     public function user(Request $request){
         $id = $request->input("user_id");
         return User::find($id);
+    }
+
+    public function changePassword(Request $request) {
+        $token = $request->input("token");
+        $new = $request->input("new_password");
+
+        if($token) {
+            return $this->changePasswordWithToken($token,$new);
+        }
+
+        $id = $request->input("user_id");
+        $current = $request->input("current_password");
+        $user = User::find($id);
+        if(!$user) {
+            return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Usuário inválido"]);
+        }
+
+        if($user->password != Hash::make($current)) {
+            return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Senha atual incorreta"]);
+        }
+
+        $user->pasword = Hash::make($new);
+
+        if(!$user->save()) {
+            return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Falha na operação"]);
+        }
+
+        return APIService::sendJson(["status" => "OK", "response" => [], "message" => "Senha alterada com sucesso"]);
+
+    }
+
+    private function changePasswordWithToken($token,$newPass) {
+        $model = Token::where('token', $token)->first();
+        
+        if (!$model) {
+            return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Token inválido"]);
+        }
+
+        if (!$model->isValid()) {
+            return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Link expirado"]);
+        }
+
+        if($model->used) {
+            return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Link já utilizado"]);
+        }
+        
+        $user = User::find($token->user_id);
+        $user->password = Hash::make($newPass);
+
+        if(!$user->save()) {
+            return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Falha na operação"]);
+        }
+
+        $model->used = 1;
+        $model->save();
+        return APIService::sendJson(["status" => "OK", "response" => [], "message" => "Senha alterada com sucesso"]);
+    }
+
+    public function createToken(Request $request) {
+        $email = $request->input("email");
+
+        $user = User::where('email',$email)->first();
+
+        if(!$user) {
+            return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Email não cadastrado"]);
+        }
+
+        $token = new Token;
+        $token->user_id = $user->id;
+        $token->token = md5($user->id . time() . random_int(0,PHP_INT_MAX));
+        $token->setExpires();
+        
+        if(!$token->save()) {
+            return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Falha na operação"]);
+        }
+
+        return APIService::sendJson(["status" => "OK", "response" => [], "message" => "Requsição enviada com sucesso. Verifique seu email para alterar a senha"]);
     }
 
     public function loadUsers(Request $request){

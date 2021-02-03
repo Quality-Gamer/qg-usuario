@@ -25,3 +25,5 @@ Route::get('/challenge/load', ['middleware' => 'cors', 'uses' => 'ChallengeContr
 Route::post('/challenge/join', ['middleware' => 'cors', 'uses' => 'ChallengeController@join']);
 Route::get('/universities', ['middleware' => 'cors', 'uses' => 'UserController@getUniversities']);
 Route::post('/create/user', ['middleware' => 'cors', 'uses' => 'UserController@create']);
+Route::post('/change/password', ['middleware' => 'cors', 'uses' => 'UserController@changePassword']);
+Route::post('/forget', ['middleware' => 'cors', 'uses' => 'UserController@createToken']);
