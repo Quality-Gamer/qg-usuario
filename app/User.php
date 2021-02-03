@@ -14,28 +14,22 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $table = 'user';
-    public $level;
-    public $university;
 
     public function userTest() {
         return $this->hasMany('App\UserTest');
     }
 
-    public function relationLevel() {
-        $this->level = $this->belongsTo('App\Level');
-        return $this->belongsTo('App\Level');
+    public function level() {
+        return $this->hasOne('App\Level');
     }
 
-    public function relationUniversity() {
-        $this->level = $this->belongsTo('App\University');
+    public function university() {
         return $this->belongsTo('App\University');
     }
 
     public static function login($credentials) {
         if(Auth::attempt($credentials)){
             $user = Auth::user();
-            $user->level = $user->relationLevel;
-            $user->university = $user->relationUniversity;
             return APIService::sendJson(["status" => "OK", "response" => $user,"message" => "success"]);
         }
 
