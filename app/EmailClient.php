@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Postmark\PostmarkClient;
-require_once('./vendor/autoload.php');
+// require_once('./vendor/autoload.php');
 
 class EmailClient extends Model {
     protected $table = 'test';
