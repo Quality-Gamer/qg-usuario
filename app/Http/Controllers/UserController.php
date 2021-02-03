@@ -19,7 +19,8 @@ class UserController extends Controller
     public function login(Request $request){
         $credentials = $request->only(['email','password']);
         $user = User::login($credentials);
-        return $user;
+        
+        return User::find($user->id);
     }
 
     public function create(Request $request){
