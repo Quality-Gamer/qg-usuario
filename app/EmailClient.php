@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-require_once('./vendor/autoload.php');
+require_once('../vendor/autoload.php');
 
 use Illuminate\Database\Eloquent\Model;
 use Postmark\PostmarkClient;
