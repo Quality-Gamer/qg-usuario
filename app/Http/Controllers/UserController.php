@@ -30,7 +30,7 @@ class UserController extends Controller
             $response->university = $user->university();
         }
         
-        return $response;
+        return APIService::sendJson($response);
     }
 
     public function create(Request $request){
