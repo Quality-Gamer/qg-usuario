@@ -27,3 +27,4 @@ Route::get('/universities', ['middleware' => 'cors', 'uses' => 'UserController@g
 Route::post('/create/user', ['middleware' => 'cors', 'uses' => 'UserController@create']);
 Route::post('/change/password', ['middleware' => 'cors', 'uses' => 'UserController@changePassword']);
 Route::post('/forget', ['middleware' => 'cors', 'uses' => 'UserController@createToken']);
+Route::get('/token', ['middleware' => 'cors', 'uses' => 'UserController@tokenValid']);

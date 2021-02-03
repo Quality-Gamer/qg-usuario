@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\University;
+use App\Email;
+use App\EmailClient;
 use App\Token;
 use App\APIService;
 use Illuminate\Support\Facades\Validator;
@@ -137,7 +139,48 @@ class UserController extends Controller
             return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Falha na operação"]);
         }
 
+        $this->sendEmailForget($user,$token);
         return APIService::sendJson(["status" => "OK", "response" => [], "message" => "Requsição enviada com sucesso. Verifique seu email para alterar a senha"]);
+    }
+
+    public function tokenValid(Request $request) {
+        $token = $request->input("token");
+        $model = Token::where('token', $token)->first();
+
+        if(!$model) {
+            return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Token inválido"]);
+        }
+
+        if(!$model->isValid()) {
+            return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Token expirado"]);
+        }
+
+        if($model->used) {
+            return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Token já utilizado"]);
+        }
+
+        return APIService::sendJson(["status" => "OK", "response" => [], "message" => "Sucesso"]);
+
+    }
+
+    private function sendEmailForget($user,$token) {
+        $client = new EmailClient;
+        $link = env("APP_URL") . "?token=".$token;
+        $subject = "Quality Gamer - Redefinição de Senha";
+        $html = "<div><h3>Alterar senha<h3><br/> Olá {$user->name}"
+        ." para alterar sua senha clique no link abaixo: <br/> {$link}"
+        ." <br/> Caso não tenha solicitado a alteração, favor ignorar este email.</div>";
+        $text = "Alterar senha \r\n Olá {$user->name}"
+        ." para alterar sua senha clique no link abaixo: \r\n {$link}"
+        ." \r\n Caso não tenha solicitado a alteração, favor ignorar este email.</div>";
+        
+        $email = new Email;
+        $email->subject = $subject;
+        $email->user_id = $user->id;
+        $email->content = $html;
+        $email->save();
+        
+        $client->sendEmail($user->email,$subject,$html,$text);
     }
 
     public function loadUsers(Request $request){
