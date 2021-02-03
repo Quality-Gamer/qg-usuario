@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use stdClass;
 
 class UserController extends Controller
 {
@@ -20,14 +21,16 @@ class UserController extends Controller
         $credentials = $request->only(['email','password']);
         $user = User::login($credentials);
         
-        if(!$user) {
-            return APIService::sendJson(["status" => "NOK", "response" => $user, "message" => 'email/senha inválidos']);
+        $response = new stdClass;
+        $response->nome = $user->nome;
+        $response->email = $user->email;
+
+        if($user) {
+            $response->level = $user->level();
+            $response->university = $user->university();
         }
         
-        $user->level = $user->level();
-        $user->university = $user->university();
-        
-        return APIService::sendJson(["status" => "OK", "response" => $user, "message" => 'sucesso']);
+        return $response;
     }
 
     public function create(Request $request){
