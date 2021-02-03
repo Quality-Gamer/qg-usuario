@@ -13,6 +13,8 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $table = 'user';
+    public $level;
+    public $university;
 
     public function userTest() {
         return $this->hasMany('App\UserTest');
