@@ -140,7 +140,7 @@ class UserController extends Controller
             return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Falha na operação"]);
         }
 
-        $this->sendEmailForget($user,$token);
+        $this->sendEmailForget($user,$token->token);
         return APIService::sendJson(["status" => "OK", "response" => [], "message" => "Requsição enviada com sucesso. Verifique seu email para alterar a senha"]);
     }
 
@@ -172,7 +172,8 @@ class UserController extends Controller
         ." para alterar sua senha clique no link abaixo: <br/> {$link}"
         ." <br/> Caso não tenha solicitado a alteração, favor ignorar este email.</div>";
         $text = "Alterar senha \r\n Olá {$user->name}"
-        ." para alterar sua senha clique no link abaixo: \r\n {$link}"
+        ." para alterar sua senha clique no link abaixo: \r\n "
+        ."<a href='{$link}'>{$link}</a>"
         ." \r\n Caso não tenha solicitado a alteração, favor ignorar este email.</div>";
         
         $email = new Email;
