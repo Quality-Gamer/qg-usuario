@@ -169,8 +169,8 @@ class UserController extends Controller
         $url = env("FRONTEND_URL") ? env("FRONTEND_URL") : "https://qg-frontend.herokuapp.com/";
         $link = $url . "token/token=".$token;
         $subject = "Quality Gamer - Redefinição de Senha";
-        $html = "<div><b><span class=\"text-gray fs-20\">Quality</span>"
-        . "<span class=\"text-green fs-20\">Gamer</span></b>"
+        $html = "<div><h1><b><span style='color:#91908f' class=\"text-gray fs-20\">Quality</span>"
+        . "<span style='color:#488f3f' class=\"text-green fs-20\">Gamer</span></b></h1>"
         . "<h3>Alterar senha<h3><br/> Olá {$user->name}"
         ." para alterar sua senha clique no link abaixo: <br/> {$link}"
         ." <br/> Caso não tenha solicitado a alteração, favor ignorar este email.</div>";
