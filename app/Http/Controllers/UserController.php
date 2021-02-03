@@ -12,6 +12,7 @@ use App\APIService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -133,7 +134,7 @@ class UserController extends Controller
         $token = new Token;
         $token->user_id = $user->id;
         $token->token = md5($user->id . time() . random_int(0,PHP_INT_MAX));
-        $token->setExpires();
+        return $token->setExpires();
         
         if(!$token->save()) {
             return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Falha na operação"]);
