@@ -15,7 +15,7 @@ class Token extends Model
     }
 
     public function isValid() {
-        $valid = DB::select("SELECT NOW() <= '{$this->expires} as valid");
+        $valid = DB::select("SELECT NOW() <= '{$this->expires}' as valid");
         return $valid[0]->valid;      
     }
 
