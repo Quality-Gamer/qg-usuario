@@ -111,7 +111,7 @@ class UserController extends Controller
             return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Link já utilizado"]);
         }
         
-        $user = User::find($token->user_id);
+        $user = User::find($model->user_id);
         $user->password = Hash::make($newPass);
 
         if(!$user->save()) {
