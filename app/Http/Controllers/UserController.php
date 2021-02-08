@@ -168,7 +168,7 @@ class UserController extends Controller
     private function sendEmailForget($user,$token) {
         $client = new EmailClient;
         $url = env("FRONTEND_URL") ? env("FRONTEND_URL") : "https://qg-frontend.herokuapp.com/";
-        $link = $url . "token/token=".$token;
+        $link = $url . "token/".$token;
         $subject = "Quality Gamer - Redefinição de Senha";
         $html = "<div><h1><b><span style='color:#91908f' class=\"text-gray fs-20\">Quality</span>"
         . "<span style='color:#488f3f' class=\"text-green fs-20\">Gamer</span></b></h1>"
