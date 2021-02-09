@@ -215,7 +215,7 @@ class UserController extends Controller
 
         $user->score = $user->score + $score;
         
-        if(!$user->save()) {
+        if(true) {
             $log = new RankLog;
             $log->user_id = $user->id;
             $log->log = json_encode($user->getErrors());
