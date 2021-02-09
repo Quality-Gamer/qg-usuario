@@ -27,11 +27,16 @@ class User extends Authenticatable
         return $this->belongsTo('App\University');
     }
 
+    public function rank() {
+        return $this->hasOne('App\RankLog');
+    }
+
     public static function login($credentials) {
         if(Auth::attempt($credentials)){
             $user = Auth::user();
             $user->level;
             $user->university;
+            $user->rank;
             return APIService::sendJson(["status" => "OK", "response" => $user,"message" => "success"]);
         }
 
