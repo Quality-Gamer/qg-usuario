@@ -209,7 +209,7 @@ class UserController extends Controller
         $response = [];
         foreach ($users as $value) {
             $u = User::find($value);
-            $response[] = $u->name;
+            $response[$u->id] = $u->name;
         }
 
         return ["status" => "OK", "response" => $response, "message" => "success"];
