@@ -212,7 +212,7 @@ class UserController extends Controller
             $response[$u->id] = $u->name;
         }
 
-        return ["status" => "OK", "response" => (array) json_encode($response), "message" => "success"];
+        return ["status" => "OK", "response" => (array) $response, "message" => "success"];
     }
 
     public function updateScore(Request $request){
