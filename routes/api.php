@@ -29,3 +29,4 @@ Route::post('/change/password', ['middleware' => 'cors', 'uses' => 'UserControll
 Route::post('/forget', ['middleware' => 'cors', 'uses' => 'UserController@createToken']);
 Route::get('/token', ['middleware' => 'cors', 'uses' => 'UserController@tokenValid']);
 Route::post('/update/score', ['middleware' => 'cors', 'uses' => 'UserController@updateScore']);
+Route::get('/get/users', ['middleware' => 'cors', 'uses' => 'UserController@getUsers']);

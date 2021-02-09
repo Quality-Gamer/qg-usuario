@@ -203,6 +203,17 @@ class UserController extends Controller
         return ["status" => "OK", "response" => $u, "message" => "success"];
     }
 
+    public function getUsers(Request $request){
+        $users = $request->input('users');
+        $response = [];
+        foreach ($users as $value) {
+            $u = User::find($value);
+            $response[] = $u->name;
+        }
+
+        return ["status" => "OK", "response" => $reponse, "message" => "success"];
+    }
+
     public function updateScore(Request $request){
         $uid = $request->input("user_id");
         $score = $request->input("score");
