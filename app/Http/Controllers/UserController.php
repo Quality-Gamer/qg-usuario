@@ -8,6 +8,7 @@ use App\University;
 use App\Email;
 use App\EmailClient;
 use App\Token;
+use App\RankLog;
 use App\APIService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -201,4 +202,28 @@ class UserController extends Controller
         ->get();
         return ["status" => "OK", "response" => $u, "message" => "success"];
     }
+
+    public function updateScore(Request $request){
+        $uid = $request->input("user_id");
+        $score = $request->input("score");
+
+        $user = User::find($uid);
+
+        if(!$user) {
+            return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Usuário não existe"]);
+        }
+
+        $user->score = $user->score + $score;
+        
+        if(!$user->save()) {
+            $log = new RankLog;
+            $log->user_id = $user->id;
+            $log->log = json_encode($user->getErrors());
+            $log->save();
+            return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Falha na operação"]);
+        }
+
+        return APIService::sendJson(["status" => "OK", "response" => [], "message" => "Sucesso"]);
+    }
+
 }
