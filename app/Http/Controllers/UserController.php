@@ -205,13 +205,14 @@ class UserController extends Controller
 
     public function getUsers(Request $request){
         $users = $request->input('users');
+        $users = explode(",",$users);
         $response = [];
         foreach ($users as $value) {
             $u = User::find($value);
             $response[] = $u->name;
         }
 
-        return ["status" => "OK", "response" => $reponse, "message" => "success"];
+        return ["status" => "OK", "response" => $response, "message" => "success"];
     }
 
     public function updateScore(Request $request){
