@@ -28,7 +28,7 @@ class User extends Authenticatable
     }
 
     public function rank() {
-        return $this->hasOne('App\RankLog');
+        return $this->hasOne('App\Rank');
     }
 
     public static function login($credentials) {
