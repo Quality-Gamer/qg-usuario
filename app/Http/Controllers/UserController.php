@@ -218,7 +218,7 @@ class UserController extends Controller
         if(true) {
             $log = new RankLog;
             $log->user_id = $user->id;
-            $log->log = json_encode($user->getErrors());
+            $log->log = json_encode(["user" => $user, "score" => $score]);
             $log->save();
             return APIService::sendJson(["status" => "NOK", "response" => [], "message" => "Falha na operação"]);
         }
